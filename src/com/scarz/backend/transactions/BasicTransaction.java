@@ -3,7 +3,8 @@ package com.scarz.backend.transactions;
 import com.scarz.backend.utility.ISerializer;
 
 /**
- * Basic transaction containing common transaction information
+ * Basic transaction containing common transaction information, used for
+ * AddCredit, Create, Delete, Login, and Logout
  */
 public class BasicTransaction extends Transaction {
     private String mUserName;
@@ -45,7 +46,7 @@ public class BasicTransaction extends Transaction {
     /**
      * Serializer for serializing and deserializing AdvertiseTransaction
      */
-    public class Serializer implements ISerializer<BasicTransaction> {
+    public static class Serializer implements ISerializer<BasicTransaction> {
         /**
          * Serializes transaction into a string
          * @param basicTransaction Transaction to serialize

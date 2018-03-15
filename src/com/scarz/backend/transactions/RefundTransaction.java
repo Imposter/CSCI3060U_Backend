@@ -46,7 +46,7 @@ public class RefundTransaction extends Transaction {
     /**
      * Serializer for serializing and deserializing RefundTransaction
      */
-    public class Serializer implements ISerializer<RefundTransaction> {
+    public static class Serializer implements ISerializer<RefundTransaction> {
         /**
          * Serializes transaction into a string
          * @param refundTransaction Transaction to serialize

@@ -54,7 +54,7 @@ public class AdvertiseTransaction extends Transaction {
     /**
      * Serializer for serializing and deserializing AdvertiseTransaction
      */
-    public class Serializer implements ISerializer<AdvertiseTransaction> {
+    public static class Serializer implements ISerializer<AdvertiseTransaction> {
         /**
          * Serializes transaction into a string
          * @param advertiseTransaction Transaction to serialize

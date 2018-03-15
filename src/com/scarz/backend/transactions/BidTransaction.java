@@ -43,7 +43,7 @@ public class BidTransaction extends Transaction {
     /**
      * Serializer for serializing and deserializing BidTransaction
      */
-    public class Serializer implements ISerializer<BidTransaction> {
+    public static class Serializer implements ISerializer<BidTransaction> {
         /**
          * Serializes transaction into a string
          * @param bidTransaction Transaction to serialize

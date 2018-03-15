@@ -1,6 +1,8 @@
 package com.scarz.backend.transactions;
 
-// TODO: Comment
+/**
+ * Transaction type, used to determine type of transaction
+ */
 public class TransactionType {
     public static final int NONE = -1;
     public static final int LOGIN = 10;
