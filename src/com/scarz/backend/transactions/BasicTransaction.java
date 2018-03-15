@@ -44,7 +44,7 @@ public class BasicTransaction extends Transaction {
     }
 
     /**
-     * Serializer for serializing and deserializing AdvertiseTransaction
+     * Serializer for serializing and deserializing BasicTransaction
      */
     public static class Serializer implements ISerializer<BasicTransaction> {
         /**

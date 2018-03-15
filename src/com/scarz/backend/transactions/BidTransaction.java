@@ -3,7 +3,7 @@ package com.scarz.backend.transactions;
 import com.scarz.backend.utility.ISerializer;
 
 /**
- * Transaction for Bids containing relevant information about the bid
+ * Transaction for bids containing relevant information about the bid
  */
 public class BidTransaction extends Transaction {
     private String mItemName;
