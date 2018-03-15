@@ -3,6 +3,7 @@ package com.scarz.backend.handlers;
 import com.scarz.backend.ItemFile;
 import com.scarz.backend.UserFile;
 import com.scarz.backend.transactions.BasicTransaction;
+import com.scarz.backend.transactions.BidTransaction;
 import com.scarz.backend.transactions.Transaction;
 import com.scarz.backend.transactions.TransactionType;
 
@@ -48,7 +49,7 @@ public class BidHandler implements IHandler {
      */
     @Override
     public boolean handle(Transaction t) {
-        BasicTransaction transaction = (BasicTransaction)t;
+        BidTransaction transaction = (BidTransaction)t;
 
         // TODO: Implement
         throw new UnsupportedOperationException("Not implemented");

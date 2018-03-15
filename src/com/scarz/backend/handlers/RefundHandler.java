@@ -2,6 +2,7 @@ package com.scarz.backend.handlers;
 
 import com.scarz.backend.UserFile;
 import com.scarz.backend.transactions.BasicTransaction;
+import com.scarz.backend.transactions.RefundTransaction;
 import com.scarz.backend.transactions.Transaction;
 import com.scarz.backend.transactions.TransactionType;
 
@@ -44,7 +45,7 @@ public class RefundHandler implements IHandler {
      */
     @Override
     public boolean handle(Transaction t) {
-        BasicTransaction transaction = (BasicTransaction)t;
+        RefundTransaction transaction = (RefundTransaction)t;
 
         // TODO: Implement
         throw new UnsupportedOperationException("Not implemented");
