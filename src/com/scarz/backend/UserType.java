@@ -1,5 +1,8 @@
 package com.scarz.backend;
 
+/**
+ * User type, used to determine type of user
+ */
 public class UserType {
     public static final int NONE = -1;
     public static final int BUY = 0;
@@ -12,7 +15,7 @@ public class UserType {
      * @param type User type
      * @return User type in string representation
      */
-    public static String GetUserTypeString(int type) {
+    public static String getUserTypeString(int type) {
         // TODO: Implement
         throw new UnsupportedOperationException("Not implemented");
     }
@@ -22,7 +25,7 @@ public class UserType {
      * @param type User type
      * @return User type in long string representation
      */
-    public static String GetUserTypeLongString(int type) {
+    public static String getUserTypeLongString(int type) {
         // TODO: Implement
         throw new UnsupportedOperationException("Not implemented");
     }
@@ -32,7 +35,7 @@ public class UserType {
      * @param type User type in short form
      * @return User type in integer representation
      */
-    public static int GetUserTypeFromString(String type) {
+    public static int getUserTypeFromString(String type) {
         // TODO: Implement
         throw new UnsupportedOperationException("Not implemented");
     }
@@ -42,7 +45,7 @@ public class UserType {
      * @param type User type in long form
      * @return User type in integer representation
      */
-    public static int GetUserTypeFromLongString(String type) {
+    public static int getUserTypeFromLongString(String type) {
         // TODO: Implement
         throw new UnsupportedOperationException("Not implemented");
     }
