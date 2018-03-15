@@ -1,5 +1,6 @@
 package com.scarz.backend.transactions;
 
+// TODO: Comment
 public class TransactionType {
     public static final int NONE = -1;
     public static final int LOGIN = 10;
