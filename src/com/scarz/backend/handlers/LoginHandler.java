@@ -6,7 +6,7 @@ import com.scarz.backend.transactions.Transaction;
 import com.scarz.backend.transactions.TransactionType;
 
 /**
- * Handles operations for transaction type create
+ * Handles operations for transaction type login
  */
 public class LoginHandler implements IHandler {
     private UserFile mUserFile;

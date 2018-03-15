@@ -8,7 +8,7 @@ import com.scarz.backend.transactions.Transaction;
 import com.scarz.backend.transactions.TransactionType;
 
 /**
- * Handles operations for transaction type create
+ * Handles operations for transaction type bid
  */
 public class BidHandler implements IHandler {
     private UserFile mUserFile;

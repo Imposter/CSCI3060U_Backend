@@ -6,7 +6,7 @@ import com.scarz.backend.transactions.Transaction;
 import com.scarz.backend.transactions.TransactionType;
 
 /**
- * Handles operations for transaction type create
+ * Handles operations for transaction type advertise
  */
 public class AdvertiseHandler implements IHandler {
     private ItemFile mItemFile;

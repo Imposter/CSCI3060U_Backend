@@ -7,7 +7,7 @@ import com.scarz.backend.transactions.Transaction;
 import com.scarz.backend.transactions.TransactionType;
 
 /**
- * Handles operations for transaction type create
+ * Handles operations for transaction type refund
  */
 public class RefundHandler implements IHandler {
     private UserFile mUserFile;

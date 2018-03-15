@@ -6,7 +6,7 @@ import com.scarz.backend.transactions.Transaction;
 import com.scarz.backend.transactions.TransactionType;
 
 /**
- * Handles operations for transaction type create
+ * Handles operations for transaction type addcredit
  */
 public class AddCreditHandler implements IHandler {
     private UserFile mUserFile;
