@@ -1,6 +1,10 @@
 package com.scarz.backend.transactions;
 
+import com.scarz.backend.Config;
+import com.scarz.backend.UserType;
 import com.scarz.backend.utility.ISerializer;
+import com.scarz.backend.utility.io.MemoryStream;
+import com.scarz.backend.utility.io.StringStream;
 
 /**
  * Basic transaction containing common transaction information, used for
@@ -15,8 +19,12 @@ public class BasicTransaction extends Transaction {
      * Initializes transaction with transaction type
      * @param type Transaction type
      */
-    public BasicTransaction(int type) {
+    public BasicTransaction(int type, String userName, int userType, double credits) {
         super(type);
+
+        mUserName = userName;
+        mUserType = userType;
+        mCredits = credits;
     }
 
     /**
@@ -51,11 +59,11 @@ public class BasicTransaction extends Transaction {
          * Serializes transaction into a string
          * @param basicTransaction Transaction to serialize
          * @return String representation of transaction
-         * @throws UnsupportedOperationException Thrown when serialization is not supported
+         * @throws Exception Thrown when serialization is not supported, or has failed
          */
         @Override
-        public String serialize(BasicTransaction basicTransaction) throws UnsupportedOperationException {
-            // TODO: Implement
+        public String serialize(BasicTransaction basicTransaction) throws Exception {
+            // Not needed
             throw new UnsupportedOperationException("Not implemented");
         }
 
@@ -63,12 +71,29 @@ public class BasicTransaction extends Transaction {
          * Deserializes string into transaction
          * @param serializedData Data to deserialize into a transaction
          * @return Transaction from data
-         * @throws UnsupportedOperationException Thrown when deserialization is not supported
+         * @throws Exception Thrown when deserialization is not supported, or has failed
          */
         @Override
-        public BasicTransaction deserialize(String serializedData) throws UnsupportedOperationException {
-            // TODO: Implement
-            throw new UnsupportedOperationException("Not implemented");
+        public BasicTransaction deserialize(String serializedData) throws Exception {
+            // Create stream from line
+            StringStream stream = new StringStream(new MemoryStream(serializedData.getBytes()));
+
+            // Read type
+            int type = Integer.parseInt(stream.readString(2));
+            stream.read();
+
+            // Read username
+            String userName = stream.readString(Config.USERNAME_LENGTH).trim();
+            stream.read();
+
+            // Read user type
+            int userType = UserType.getUserTypeFromString(stream.readString(Config.USER_TYPE_LENGTH));
+            stream.read();
+
+            // Read user credits
+            double userCredits = Double.parseDouble(stream.readString(Config.CREDITS_LENGTH));
+
+            return new BasicTransaction(type, userName, userType, userCredits);
         }
     }
 }

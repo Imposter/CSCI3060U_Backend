@@ -1,6 +1,9 @@
 package com.scarz.backend.transactions;
 
+import com.scarz.backend.Config;
 import com.scarz.backend.utility.ISerializer;
+import com.scarz.backend.utility.io.MemoryStream;
+import com.scarz.backend.utility.io.StringStream;
 
 /**
  * Transaction for bids containing relevant information about the bid
@@ -12,10 +15,16 @@ public class BidTransaction extends Transaction {
     private double mNewBid;
 
     /**
-     * Initializes transaction with Bid type
-     * @param type Refund type
+     * Initializes transaction with bid information
      */
-    public BidTransaction (int type) { super (type);}
+    public BidTransaction(String itemName, String buyerUserName, String sellerUserName, double newBid) {
+        super(TransactionType.BID);
+
+        mItemName = itemName;
+        mBuyerUserName = buyerUserName;
+        mSellerUserName = sellerUserName;
+        mNewBid = newBid;
+    }
     /**
      * Gets item's name
      * @return Item's name
@@ -48,11 +57,11 @@ public class BidTransaction extends Transaction {
          * Serializes transaction into a string
          * @param bidTransaction Transaction to serialize
          * @return String representation of transaction
-         * @throws UnsupportedOperationException Thrown when serialization is not supported
+         * @throws Exception Thrown when serialization is not supported, or has failed
          */
         @Override
         public String serialize(BidTransaction bidTransaction) throws UnsupportedOperationException {
-            // TODO: Implement
+            // Not needed
             throw new UnsupportedOperationException("Not implemented");
         }
 
@@ -60,12 +69,33 @@ public class BidTransaction extends Transaction {
          * Deserializes string into transaction
          * @param serializedData Data to deserialize into a transaction
          * @return Transaction from data
-         * @throws UnsupportedOperationException Thrown when deserialization is not supported
+         * @throws Exception Thrown when deserialization is not supported, or has failed
          */
         @Override
-        public BidTransaction deserialize(String serializedData) throws UnsupportedOperationException {
-            // TODO: Implement
-            throw new UnsupportedOperationException("Not implemented");
+        public BidTransaction deserialize(String serializedData) throws Exception {
+            // Create stream from line
+            StringStream stream = new StringStream(new MemoryStream(serializedData.getBytes()));
+
+            // Ignore type
+            stream.readString(2);
+            stream.read();
+
+            // Read item name
+            String itemName = stream.readString(Config.ITEM_NAME_LENGTH).trim();
+            stream.read();
+
+            // Read seller name
+            String sellerUserName = stream.readString(Config.USERNAME_LENGTH).trim();
+            stream.read();
+
+            // Read buyer name
+            String buyerUserName = stream.readString(Config.USERNAME_LENGTH).trim();
+            stream.read();
+
+            // Read minimum bid
+            double newBid = Double.parseDouble(stream.readString(Config.ITEM_PRICE_LENGTH));
+
+            return new BidTransaction(itemName, sellerUserName, buyerUserName, newBid);
         }
     }
 }

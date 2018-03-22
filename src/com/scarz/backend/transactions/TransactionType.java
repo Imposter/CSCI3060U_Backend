@@ -1,5 +1,7 @@
 package com.scarz.backend.transactions;
 
+import com.scarz.backend.utility.StringUtility;
+
 /**
  * Transaction type, used to determine type of transaction
  */
@@ -20,7 +22,6 @@ public class TransactionType {
      * @return  Transaction type in its string representation
      */
     public static String getTransactionTypeString(int type) {
-        // TODO: Implement
-        throw new UnsupportedOperationException("Not implemented");
+        return StringUtility.PadLeft(Integer.toString(type), '0', 2);
     }
 }

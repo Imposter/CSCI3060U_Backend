@@ -16,8 +16,17 @@ public class UserType {
      * @return User type in string representation
      */
     public static String getUserTypeString(int type) {
-        // TODO: Implement
-        throw new UnsupportedOperationException("Not implemented");
+        if (type == BUY) {
+            return "BS";
+        } else if (type == SELL) {
+            return "SS";
+        } else if (type == FULL) {
+            return "FS";
+        } else if (type == ADMIN) {
+            return "AA";
+        }
+
+        return "";
     }
 
     /**
@@ -26,8 +35,17 @@ public class UserType {
      * @return User type in long string representation
      */
     public static String getUserTypeLongString(int type) {
-        // TODO: Implement
-        throw new UnsupportedOperationException("Not implemented");
+        if (type == BUY) {
+            return "buy-standard";
+        } else if (type == SELL) {
+            return "sell-standard";
+        } else if (type == FULL) {
+            return "full-standard";
+        } else if (type == ADMIN) {
+            return "admin";
+        }
+
+        return "";
     }
 
     /**
@@ -36,8 +54,17 @@ public class UserType {
      * @return User type in integer representation
      */
     public static int getUserTypeFromString(String type) {
-        // TODO: Implement
-        throw new UnsupportedOperationException("Not implemented");
+        if (type.equals("BS")) {
+            return BUY;
+        } else if (type.equals("SS")) {
+            return SELL;
+        } else if (type.equals("FS")) {
+            return FULL;
+        } else if (type.equals("AA")) {
+            return ADMIN;
+        }
+
+        return NONE;
     }
 
     /**
@@ -46,7 +73,16 @@ public class UserType {
      * @return User type in integer representation
      */
     public static int getUserTypeFromLongString(String type) {
-        // TODO: Implement
-        throw new UnsupportedOperationException("Not implemented");
+        if (type.equals("buy-standard")) {
+            return BUY;
+        } else if (type.equals("sell-standard")) {
+            return SELL;
+        } else if (type.equals("full-standard")) {
+            return FULL;
+        } else if (type.equals("admin")) {
+            return ADMIN;
+        }
+
+        return NONE;
     }
 }

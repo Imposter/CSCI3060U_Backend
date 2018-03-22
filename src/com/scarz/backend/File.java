@@ -44,8 +44,9 @@ public class File {
 
         List<String> result = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(mInputStream));
-        while (mInputStream.available() > 0)
-            result.add(reader.readLine());
+        String line;
+        while ((line = reader.readLine()) != null)
+            result.add(line);
 
         return result;
     }
@@ -74,7 +75,7 @@ public class File {
      * Closes file's write stream
      * @throws IOException Thrown when the stream fails to close
      */
-    private void closeWrite() throws IOException {
+    public void closeWrite() throws IOException {
         if (mWriteMode) {
             mOutputStream.close();
             mWriteMode = false;
@@ -85,7 +86,7 @@ public class File {
      * Closes file's read stream
      * @throws IOException Thrown when the stream fails to close
      */
-    private void closeRead() throws IOException {
+    public void closeRead() throws IOException {
         if (mReadMode) {
             mInputStream.close();
             mReadMode = false;

@@ -1,6 +1,9 @@
 package com.scarz.backend.transactions;
 
+import com.scarz.backend.Config;
 import com.scarz.backend.utility.ISerializer;
+import com.scarz.backend.utility.io.MemoryStream;
+import com.scarz.backend.utility.io.StringStream;
 
 
 /**
@@ -12,11 +15,14 @@ public class RefundTransaction extends Transaction {
     private double mCredits;
 
     /**
-     * Initializes transaction with refund type
-     * @param type Refund type
+     * Initializes transaction with refund information
      */
-    public RefundTransaction (int type) {
-        super (type);
+    public RefundTransaction(String buyerUserName, String sellerUserName, double credits) {
+        super(TransactionType.REFUND);
+
+        mBuyerUserName = buyerUserName;
+        mSellerUserName = sellerUserName;
+        mCredits = credits;
     }
 
     /**
@@ -51,11 +57,11 @@ public class RefundTransaction extends Transaction {
          * Serializes transaction into a string
          * @param refundTransaction Transaction to serialize
          * @return String representation of transaction
-         * @throws UnsupportedOperationException Thrown when serialization is not supported
+         * @throws Exception Thrown when serialization is not supported, or has failed
          */
         @Override
-        public String serialize(RefundTransaction refundTransaction) throws UnsupportedOperationException {
-            // TODO: Implement
+        public String serialize(RefundTransaction refundTransaction) throws Exception {
+            // Not needed
             throw new UnsupportedOperationException("Not implemented");
         }
 
@@ -63,12 +69,29 @@ public class RefundTransaction extends Transaction {
          * Deserializes string into transaction
          * @param serializedData Data to deserialize into a transaction
          * @return Transaction from data
-         * @throws UnsupportedOperationException Thrown when deserialization is not supported
+         * @throws Exception Thrown when deserialization is not supported, or has failed
          */
         @Override
-        public RefundTransaction deserialize(String serializedData) throws UnsupportedOperationException {
-            // TODO: Implement
-            throw new UnsupportedOperationException("Not implemented");
+        public RefundTransaction deserialize(String serializedData) throws Exception {
+            // Create stream from line
+            StringStream stream = new StringStream(new MemoryStream(serializedData.getBytes()));
+
+            // Ignore type
+            stream.readString(2);
+            stream.read();
+
+            // Read buyer name
+            String buyerUserName = stream.readString(Config.USERNAME_LENGTH).trim();
+            stream.read();
+
+            // Read seller name
+            String sellerUserName = stream.readString(Config.USERNAME_LENGTH).trim();
+            stream.read();
+
+            // Read credits
+            double credits = Double.parseDouble(stream.readString(Config.CREDITS_LENGTH));
+
+            return new RefundTransaction(buyerUserName, sellerUserName, credits);
         }
     }
 }

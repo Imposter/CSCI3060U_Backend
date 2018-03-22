@@ -1,6 +1,9 @@
 package com.scarz.backend.transactions;
 
+import com.scarz.backend.Config;
 import com.scarz.backend.utility.ISerializer;
+import com.scarz.backend.utility.io.MemoryStream;
+import com.scarz.backend.utility.io.StringStream;
 
 /**
  * Transaction for advertisements containing relevant information about the advertisement
@@ -12,11 +15,15 @@ public class AdvertiseTransaction extends Transaction {
     private double mMinBid;
 
     /**
-     * Initializes transaction with advertise type
-     * @param type Refund type
+     * Initializes transaction with advertisement information
      */
-    public AdvertiseTransaction (int type) {
-        super (type);
+    public AdvertiseTransaction(String itemName, String sellerUserName, int daysToAuction, double minBid) {
+        super(TransactionType.ADVERTISE);
+
+        mItemName = itemName;
+        mSellerUserName = sellerUserName;
+        mDaysToAuction = daysToAuction;
+        mMinBid = minBid;
     }
 
     /**
@@ -59,11 +66,11 @@ public class AdvertiseTransaction extends Transaction {
          * Serializes transaction into a string
          * @param advertiseTransaction Transaction to serialize
          * @return String representation of transaction
-         * @throws UnsupportedOperationException Thrown when serialization is not supported
+         * @throws Exception Thrown when serialization is not supported, or has failed
          */
         @Override
-        public String serialize(AdvertiseTransaction advertiseTransaction) throws UnsupportedOperationException {
-            // TODO: Implement
+        public String serialize(AdvertiseTransaction advertiseTransaction) throws Exception {
+            // Not needed
             throw new UnsupportedOperationException("Not implemented");
         }
 
@@ -71,12 +78,33 @@ public class AdvertiseTransaction extends Transaction {
          * Deserializes string into transaction
          * @param serializedData Data to deserialize into a transaction
          * @return Transaction from data
-         * @throws UnsupportedOperationException Thrown when deserialization is not supported
+         * @throws Exception Thrown when deserialization is not supported, or has failed
          */
         @Override
-        public AdvertiseTransaction deserialize(String serializedData) throws UnsupportedOperationException {
-            // TODO: Implement
-            throw new UnsupportedOperationException("Not implemented");
+        public AdvertiseTransaction deserialize(String serializedData) throws Exception {
+            // Create stream from line
+            StringStream stream = new StringStream(new MemoryStream(serializedData.getBytes()));
+
+            // Ignore type
+            stream.readString(2);
+            stream.read();
+
+            // Read item name
+            String itemName = stream.readString(Config.ITEM_NAME_LENGTH).trim();
+            stream.read();
+
+            // Read seller name
+            String sellerUserName = stream.readString(Config.USERNAME_LENGTH).trim();
+            stream.read();
+
+            // Read days to auction
+            int daysToAuction = Integer.parseInt(stream.readString(Config.ITEM_AUCTION_LENGTH));
+            stream.read();
+
+            // Read minimum bid
+            double minBid = Double.parseDouble(stream.readString(Config.ITEM_PRICE_LENGTH));
+
+            return new AdvertiseTransaction(itemName, sellerUserName, daysToAuction, minBid);
         }
     }
 }

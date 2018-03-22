@@ -3,7 +3,6 @@ package com.scarz.backend;
 import com.scarz.backend.transactions.Transaction;
 import com.scarz.backend.utility.ISerializer;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,11 +38,35 @@ public class TransactionFile extends File {
 
     /**
      * Opens transaction file and reads all the transactions into a list of transactions
-     * @throws IOException Thrown when an error occurs while reading the file
+     * @throws Exception Thrown when an error occurs while reading the file
      */
-    public void open() throws IOException {
-        // TODO: Open file in read mode, read all items, close handle
-        throw new UnsupportedOperationException("Not implemented");
+    public void open() throws Exception {
+        // Open in read mode
+        openRead();
+
+        // Read all transactions
+        List<String> lines = readLines();
+        for (String line : lines) {
+            // Skip invalid lines
+            if (line.isEmpty())
+                continue;
+
+            int type = Integer.parseInt(line.substring(0, 2));
+
+            // Find serializer
+            ISerializer<Transaction> serializer = mSerializers.get(type);
+            if (serializer == null)
+                throw new ClassNotFoundException("Serializer for type does not exist");
+
+            // Parse transaction
+            Transaction transaction = serializer.deserialize(line);
+
+            // Store transaction
+            mTransactions.add(transaction);
+        }
+
+        // Close handle
+        closeRead();
     }
 
     /**

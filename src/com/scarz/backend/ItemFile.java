@@ -1,5 +1,9 @@
 package com.scarz.backend;
 
+import com.scarz.backend.utility.StringUtility;
+import com.scarz.backend.utility.io.MemoryStream;
+import com.scarz.backend.utility.io.StringStream;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +26,46 @@ public class ItemFile extends File {
 
     /**
      * Opens file and reads the items to memory
-     * @throws IOException Thrown when an error occurs while reading the file
+     * @throws Exception Thrown when an error occurs while reading the file
      */
-    public void open() throws IOException {
-        // TODO: Open file in read mode, read all items, close handle
-        throw new UnsupportedOperationException("Not implemented");
+    public void open() throws Exception {
+        // Open in read mode
+        openRead();
+
+        // Read all items
+        List<String> lines = readLines();
+        for (String line : lines) {
+            // End of file item
+            if (line.equals("END"))
+                break;
+
+            // Create stream from line
+            StringStream stream = new StringStream(new MemoryStream(line.getBytes()));
+
+            // Read item name
+            String itemName = stream.readString(Config.ITEM_NAME_LENGTH).trim();
+            stream.read();
+
+            // Read seller name
+            String sellerName = stream.readString(Config.USERNAME_LENGTH).trim();
+            stream.read();
+
+            // Read bidder name
+            String bidderName = stream.readString(Config.USERNAME_LENGTH).trim();
+            stream.read();
+
+            // Read auction days
+            int daysToAuction = Integer.parseInt(stream.readString(Config.ITEM_AUCTION_LENGTH));
+            stream.read();
+
+            // Read item price
+            double currentBid = Double.parseDouble(stream.readString(Config.ITEM_PRICE_LENGTH));
+
+            mItems.add(new Item(itemName, sellerName, bidderName, daysToAuction, currentBid));
+        }
+
+        // Close file handle
+        closeRead();
     }
 
     /**
@@ -35,8 +74,32 @@ public class ItemFile extends File {
      */
     @Override
     public void close() throws IOException {
-        // TODO: Open file in write mode, write all lines, close handle
-        throw new UnsupportedOperationException("Not implemented");
+        // Open in write mode
+        openWrite(false);
+
+        // Write all items
+        for (Item item : mItems) {
+            StringBuilder line = new StringBuilder();
+            line.append(StringUtility.PadRight(item.getName(), ' ', Config.ITEM_NAME_LENGTH));
+            line.append(' ');
+            line.append(StringUtility.PadRight(item.getSellerUserName(), ' ', Config.USERNAME_LENGTH));
+            line.append(' ');
+            line.append(StringUtility.PadRight(item.getBuyerUserName(), ' ', Config.USERNAME_LENGTH));
+            line.append(' ');
+            line.append(StringUtility.PadLeft(Integer.toString(item.getDaysToAuction()),
+                    '0', Config.ITEM_AUCTION_LENGTH));
+            line.append(' ');
+            line.append(StringUtility.PadLeft(String.format("%.2f", item.getCurrentBid()),
+                    '0', Config.ITEM_PRICE_LENGTH));
+
+            writeLine(line.toString());
+        }
+
+        // Write file end
+        writeLine("END");
+
+        // Close handle
+        closeWrite();
     }
 
     /**
@@ -54,8 +117,13 @@ public class ItemFile extends File {
      * @return Pointer to item found, if any
      */
     public Item getItemByUserAndName(String seller, String name) {
-        // TODO: Find item by user, and name
-        throw new UnsupportedOperationException("Not implemented");
+        for (Item item : mItems) {
+            if (item.getSellerUserName().equals(seller) && item.getName().equals(name)) {
+                return item;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -63,8 +131,7 @@ public class ItemFile extends File {
      * @param item Item to add
      */
     public void addItem(Item item) {
-        // TODO: Implement
-        throw new UnsupportedOperationException("Not implemented");
+        mItems.add(item);
     }
 
     /**
@@ -72,7 +139,6 @@ public class ItemFile extends File {
      * @param item Item to remove
      */
     public void removeItem(Item item) {
-        // TODO: Implement
-        throw new UnsupportedOperationException("Not implemented");
+        mItems.remove(item);
     }
 }
