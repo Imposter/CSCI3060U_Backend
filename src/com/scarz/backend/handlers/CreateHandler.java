@@ -1,5 +1,6 @@
 package com.scarz.backend.handlers;
 
+import com.scarz.backend.User;
 import com.scarz.backend.UserFile;
 import com.scarz.backend.transactions.BasicTransaction;
 import com.scarz.backend.transactions.Transaction;
@@ -44,9 +45,21 @@ public class CreateHandler implements IHandler {
      */
     @Override
     public boolean handle(Transaction t) {
-        BasicTransaction transaction = (BasicTransaction)t;
+        BasicTransaction transaction = (BasicTransaction) t;
 
-        // TODO: Implement
-        throw new UnsupportedOperationException("Not implemented");
+        // Check if the user already exists
+        User user = mUserFile.getUserByName(transaction.getUserName());
+        if (user != null) {
+            System.out.printf("[%s] User %s already exists!\r\n", getName(), transaction.getUserName());
+            return false;
+        }
+
+        // Create user
+        user = new User(transaction.getUserName(), transaction.getUserType(), transaction.getCredits());
+        mUserFile.addUser(user);
+
+        System.out.printf("[%s] Created user %s\r\n", getName(), transaction.getUserName());
+
+        return true;
     }
 }

@@ -1,5 +1,6 @@
 package com.scarz.backend.handlers;
 
+import com.scarz.backend.User;
 import com.scarz.backend.UserFile;
 import com.scarz.backend.transactions.BasicTransaction;
 import com.scarz.backend.transactions.RefundTransaction;
@@ -47,7 +48,29 @@ public class RefundHandler implements IHandler {
     public boolean handle(Transaction t) {
         RefundTransaction transaction = (RefundTransaction)t;
 
-        // TODO: Implement
-        throw new UnsupportedOperationException("Not implemented");
+        // Get users
+        User seller = mUserFile.getUserByName(transaction.getSellerUserName());
+        User buyer = mUserFile.getUserByName(transaction.getBuyerUserName());
+
+        // Check if seller exists
+        if (seller == null) {
+            System.out.printf("[%s] Seller %s does not exist!\r\n", getName(), transaction.getSellerUserName());
+            return false;
+        }
+
+        // Check if buyer exists
+        if (buyer == null) {
+            System.out.printf("[%s] Buyer %s does not exist!\r\n", getName(), transaction.getBuyerUserName());
+            return false;
+        }
+
+        // Update credits
+        seller.setCredits(seller.getCredits() - transaction.getCredits());
+        buyer.setCredits(buyer.getCredits() - transaction.getCredits());
+
+        System.out.printf("[%s] Refund given user %s by %s\r\n", getName(), transaction.getBuyerUserName(),
+                transaction.getSellerUserName());
+
+        return true;
     }
 }

@@ -1,5 +1,6 @@
 package com.scarz.backend.handlers;
 
+import com.scarz.backend.User;
 import com.scarz.backend.UserFile;
 import com.scarz.backend.transactions.BasicTransaction;
 import com.scarz.backend.transactions.Transaction;
@@ -46,7 +47,20 @@ public class DeleteHandler implements IHandler {
     public boolean handle(Transaction t) {
         BasicTransaction transaction = (BasicTransaction)t;
 
-        // TODO: Implement
-        throw new UnsupportedOperationException("Not implemented");
+        // Get user
+        User user = mUserFile.getUserByName(transaction.getUserName());
+
+        // Check if user exists
+        if (user == null) {
+            System.out.printf("[%s] User %s does not exist!\r\n", getName(), transaction.getUserName());
+            return false;
+        }
+
+        // Remove user
+        mUserFile.removeUser(user);
+
+        System.out.printf("[%s] Deleted user %s\r\n", getName(), transaction.getUserName());
+
+        return true;
     }
 }

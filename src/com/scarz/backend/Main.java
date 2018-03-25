@@ -74,12 +74,24 @@ public class Main {
 
         // Handle all transactions
         for (Transaction transaction : transactionFile.getTransactions()) {
-            //      Handle each transaction in order, and depending on its Transaction Type, send it to be handled by the
-            //      appropriate handler
+            // Get handler for type
+            boolean handled = false;
+            for (IHandler handler : handlers) {
+                if (handler.getType() == transaction.getType()) {
+                    // Handle
+                    boolean success = handler.handle(transaction);
+                    if (!success) {
+                        System.out.printf("[%s] Error handling transaction\r\n", handler.getName());
+                    }
 
-            //      Once the handler makes the changes to the UserFile and ItemFile instances, then:
+                    handled = true;
+                    break;
+                }
+            }
 
-            //      Write output to the console mentioning if a transaction is not handled correctly, or is invalid
+            if (!handled) {
+                System.out.printf("Failed to handle transaction of type %d\r\n", transaction.getType());
+            }
         }
 
         try {
@@ -95,5 +107,7 @@ public class Main {
             System.out.println("Unable to write to file!");
             ex.printStackTrace();
         }
+
+        System.out.println("All done!");
     }
 }
