@@ -16,33 +16,15 @@ public class UserType {
      * @return User type in string representation
      */
     public static String getUserTypeString(int type) {
-        if (type == BUY) {
-            return "BS";
-        } else if (type == SELL) {
-            return "SS";
-        } else if (type == FULL) {
-            return "FS";
-        } else if (type == ADMIN) {
-            return "AA";
-        }
-
-        return "";
-    }
-
-    /**
-     * Converts a specified user type to its long string representation
-     * @param type User type
-     * @return User type in long string representation
-     */
-    public static String getUserTypeLongString(int type) {
-        if (type == BUY) {
-            return "buy-standard";
-        } else if (type == SELL) {
-            return "sell-standard";
-        } else if (type == FULL) {
-            return "full-standard";
-        } else if (type == ADMIN) {
-            return "admin";
+        switch (type) {
+            case BUY:
+                return "BS";
+            case SELL:
+                return "SS";
+            case FULL:
+                return "FS";
+            case ADMIN:
+                return "AA";
         }
 
         return "";
@@ -54,33 +36,15 @@ public class UserType {
      * @return User type in integer representation
      */
     public static int getUserTypeFromString(String type) {
-        if (type.equals("BS")) {
-            return BUY;
-        } else if (type.equals("SS")) {
-            return SELL;
-        } else if (type.equals("FS")) {
-            return FULL;
-        } else if (type.equals("AA")) {
-            return ADMIN;
-        }
-
-        return NONE;
-    }
-
-    /**
-     * Converts a user type from string form to its integer representation
-     * @param type User type in long form
-     * @return User type in integer representation
-     */
-    public static int getUserTypeFromLongString(String type) {
-        if (type.equals("buy-standard")) {
-            return BUY;
-        } else if (type.equals("sell-standard")) {
-            return SELL;
-        } else if (type.equals("full-standard")) {
-            return FULL;
-        } else if (type.equals("admin")) {
-            return ADMIN;
+        switch (type) {
+            case "BS":
+                return BUY;
+            case "SS":
+                return SELL;
+            case "FS":
+                return FULL;
+            case "AA":
+                return ADMIN;
         }
 
         return NONE;

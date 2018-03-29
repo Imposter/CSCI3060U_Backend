@@ -66,9 +66,9 @@ public class RefundHandler implements IHandler {
 
         // Update credits
         seller.setCredits(seller.getCredits() - transaction.getCredits());
-        buyer.setCredits(buyer.getCredits() - transaction.getCredits());
+        buyer.setCredits(buyer.getCredits() + transaction.getCredits());
 
-        System.out.printf("[%s] Refund given user %s by %s\r\n", getName(), transaction.getBuyerUserName(),
+        System.out.printf("[%s] Refund given to %s by %s\r\n", getName(), transaction.getBuyerUserName(),
                 transaction.getSellerUserName());
 
         return true;

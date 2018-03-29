@@ -9,6 +9,7 @@ public class Item {
     private String mBidderUserName;
     private int mDaysToAuction;
     private double mCurrentBid;
+    private boolean mNewItem;
 
     /**
      * Initializes item with information provided
@@ -18,12 +19,13 @@ public class Item {
      * @param daysLeft Days left to auction
      * @param currentBid Current bid
      */
-    public Item(String itemName, String sellerName, String bidderName, int daysLeft, double currentBid) {
+    public Item(String itemName, String sellerName, String bidderName, int daysLeft, double currentBid, boolean newItem) {
         mName = itemName;
         mSellerUserName = sellerName;
         mBidderUserName = bidderName;
         mDaysToAuction = daysLeft;
         mCurrentBid = currentBid;
+        mNewItem = newItem;
     }
 
     /**
@@ -88,6 +90,14 @@ public class Item {
      */
     public void setCurrentBid(double bid) {
         mCurrentBid = bid;
+    }
+
+    /**
+     * Is the item new to the system
+     * @return New item
+     */
+    public boolean isNewItem() {
+        return mNewItem;
     }
 }
 

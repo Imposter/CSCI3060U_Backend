@@ -71,7 +71,7 @@ public class AdvertiseHandler implements IHandler {
 
         // Store in item list
         item = new Item(transaction.getItemName(), transaction.getSellerUserName(), "",
-                transaction.getDaysToAuction() + 1, transaction.getMinBid());
+                transaction.getDaysToAuction(), transaction.getMinBid(), true);
         mItemFile.addItem(item);
 
         System.out.printf("[%s] Posted listing %s by %s for %.2f, available for %d days!\r\n", getName(),

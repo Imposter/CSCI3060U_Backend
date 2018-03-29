@@ -17,7 +17,7 @@ public class BidTransaction extends Transaction {
     /**
      * Initializes transaction with bid information
      */
-    public BidTransaction(String itemName, String buyerUserName, String sellerUserName, double newBid) {
+    public BidTransaction(String itemName, String sellerUserName, String buyerUserName,double newBid) {
         super(TransactionType.BID);
 
         mItemName = itemName;

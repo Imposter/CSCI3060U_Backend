@@ -61,7 +61,7 @@ public class ItemFile extends File {
             // Read item price
             double currentBid = Double.parseDouble(stream.readString(Config.ITEM_PRICE_LENGTH));
 
-            mItems.add(new Item(itemName, sellerName, bidderName, daysToAuction, currentBid));
+            mItems.add(new Item(itemName, sellerName, bidderName, daysToAuction, currentBid, false));
         }
 
         // Close file handle

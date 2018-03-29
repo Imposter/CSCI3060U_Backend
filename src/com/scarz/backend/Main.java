@@ -111,7 +111,9 @@ public class Main {
                 continue;
             }
 
-            item.setDaysToAuction(daysLeft - 1);
+            // Decrement the amount of days left to auction if the item was not just posted
+            if (!item.isNewItem())
+                item.setDaysToAuction(daysLeft - 1);
         }
 
         try {
