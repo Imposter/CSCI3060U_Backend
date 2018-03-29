@@ -84,7 +84,7 @@ public class ItemFile extends File {
             line.append(' ');
             line.append(StringUtility.PadRight(item.getSellerUserName(), ' ', Config.USERNAME_LENGTH));
             line.append(' ');
-            line.append(StringUtility.PadRight(item.getBuyerUserName(), ' ', Config.USERNAME_LENGTH));
+            line.append(StringUtility.PadRight(item.getBidderUserName(), ' ', Config.USERNAME_LENGTH));
             line.append(' ');
             line.append(StringUtility.PadLeft(Integer.toString(item.getDaysToAuction()),
                     '0', Config.ITEM_AUCTION_LENGTH));

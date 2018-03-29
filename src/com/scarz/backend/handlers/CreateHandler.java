@@ -50,7 +50,7 @@ public class CreateHandler implements IHandler {
         // Check if the user already exists
         User user = mUserFile.getUserByName(transaction.getUserName());
         if (user != null) {
-            System.out.printf("[%s] User %s already exists!\r\n", getName(), transaction.getUserName());
+            System.out.printf("ERROR: [%s] User %s already exists!\r\n", getName(), transaction.getUserName());
             return false;
         }
 

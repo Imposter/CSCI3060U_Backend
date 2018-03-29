@@ -1,6 +1,9 @@
 package com.scarz.backend.handlers;
 
+import com.scarz.backend.Item;
 import com.scarz.backend.ItemFile;
+import com.scarz.backend.User;
+import com.scarz.backend.UserFile;
 import com.scarz.backend.transactions.AdvertiseTransaction;
 import com.scarz.backend.transactions.Transaction;
 import com.scarz.backend.transactions.TransactionType;
@@ -9,13 +12,15 @@ import com.scarz.backend.transactions.TransactionType;
  * Handles operations for transaction type advertise
  */
 public class AdvertiseHandler implements IHandler {
+    private UserFile mUserFile;
     private ItemFile mItemFile;
 
     /**
      * Initializes handler with required files
      * @param itemFile Available items file
      */
-    public AdvertiseHandler(ItemFile itemFile) {
+    public AdvertiseHandler(UserFile userFile, ItemFile itemFile) {
+        mUserFile = userFile;
         mItemFile = itemFile;
     }
 
@@ -46,7 +51,32 @@ public class AdvertiseHandler implements IHandler {
     public boolean handle(Transaction t) {
         AdvertiseTransaction transaction = (AdvertiseTransaction)t;
 
-        // TODO: Implement
-        throw new UnsupportedOperationException("Not implemented");
+        // Get user
+        User user = mUserFile.getUserByName(transaction.getSellerUserName());
+
+        // Check if user exists
+        if (user == null) {
+            System.out.printf("ERROR: [%s] User %s does not exist!\r\n", getName(), transaction.getSellerUserName());
+            return false;
+        }
+
+        Item item = mItemFile.getItemByUserAndName(transaction.getSellerUserName(), transaction.getItemName());
+
+        // Check if item exists
+        if (item != null) {
+            System.out.printf("ERROR: [%s] Item %s by user %s already exists!\r\n", getName(), transaction.getItemName(),
+                    transaction.getSellerUserName());
+            return false;
+        }
+
+        // Store in item list
+        item = new Item(transaction.getItemName(), transaction.getSellerUserName(), "",
+                transaction.getDaysToAuction() + 1, transaction.getMinBid());
+        mItemFile.addItem(item);
+
+        System.out.printf("[%s] Posted listing %s by %s for %.2f, available for %d days!\r\n", getName(),
+                transaction.getItemName(), user.getName(), transaction.getMinBid(), transaction.getDaysToAuction());
+
+        return true;
     }
 }

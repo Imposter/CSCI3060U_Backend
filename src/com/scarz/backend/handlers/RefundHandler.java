@@ -54,13 +54,13 @@ public class RefundHandler implements IHandler {
 
         // Check if seller exists
         if (seller == null) {
-            System.out.printf("[%s] Seller %s does not exist!\r\n", getName(), transaction.getSellerUserName());
+            System.out.printf("ERROR: [%s] Seller %s does not exist!\r\n", getName(), transaction.getSellerUserName());
             return false;
         }
 
         // Check if buyer exists
         if (buyer == null) {
-            System.out.printf("[%s] Buyer %s does not exist!\r\n", getName(), transaction.getBuyerUserName());
+            System.out.printf("ERROR: [%s] Buyer %s does not exist!\r\n", getName(), transaction.getBuyerUserName());
             return false;
         }
 

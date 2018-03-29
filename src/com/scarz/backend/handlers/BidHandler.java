@@ -1,8 +1,9 @@
 package com.scarz.backend.handlers;
 
+import com.scarz.backend.Item;
 import com.scarz.backend.ItemFile;
+import com.scarz.backend.User;
 import com.scarz.backend.UserFile;
-import com.scarz.backend.transactions.BasicTransaction;
 import com.scarz.backend.transactions.BidTransaction;
 import com.scarz.backend.transactions.Transaction;
 import com.scarz.backend.transactions.TransactionType;
@@ -51,7 +52,45 @@ public class BidHandler implements IHandler {
     public boolean handle(Transaction t) {
         BidTransaction transaction = (BidTransaction)t;
 
-        // TODO: Implement
-        throw new UnsupportedOperationException("Not implemented");
+        // Check if buyer exists
+        User buyer = mUserFile.getUserByName(transaction.getBuyerUserName());
+        if (buyer == null) {
+            System.out.printf("ERROR: [%s] Buyer %s does not exist!\r\n", getName(), transaction.getBuyerUserName());
+            return false;
+        }
+
+        // Check if seller exists
+        User seller = mUserFile.getUserByName(transaction.getSellerUserName());
+        if (seller == null) {
+            System.out.printf("ERROR: [%s] Seller %s does not exist!\r\n", getName(), transaction.getSellerUserName());
+            return false;
+        }
+
+        Item item = mItemFile.getItemByUserAndName(transaction.getSellerUserName(), transaction.getItemName());
+
+        // Check if item exists
+        if (item == null) {
+            System.out.printf("ERROR: [%s] Item %s by user %s does not exist!\r\n", getName(), transaction.getItemName(),
+                    transaction.getSellerUserName());
+            return false;
+        }
+
+        // Check if there was a previous bidder, if there was, refund his money
+        if (!item.getBidderUserName().isEmpty()) {
+            User previousBidder = mUserFile.getUserByName(item.getBidderUserName());
+            previousBidder.setCredits(previousBidder.getCredits() + item.getCurrentBid());
+        }
+
+        // Update listing
+        item.setBidderUserName(buyer.getName());
+        item.setCurrentBid(transaction.getNewBid());
+
+        // Take away credits from user
+        buyer.setCredits(buyer.getCredits() - transaction.getNewBid());
+
+        System.out.printf("[%s] Bid on item %s by %s for %.2f!\r\n", getName(), transaction.getItemName(),
+                transaction.getBuyerUserName(), transaction.getNewBid());
+
+        return true;
     }
 }

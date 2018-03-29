@@ -52,7 +52,7 @@ public class LoginHandler implements IHandler {
 
         // Check if user exists
         if (user == null) {
-            System.out.printf("[%s] User %s does not exist!\r\n", getName(), transaction.getUserName());
+            System.out.printf("ERROR: [%s] User %s does not exist!\r\n", getName(), transaction.getUserName());
             return false;
         }
 

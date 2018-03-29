@@ -57,7 +57,7 @@ public class Main {
                 new CreateHandler(userFile),
                 new DeleteHandler(userFile),
 
-                new AdvertiseHandler(itemFile),
+                new AdvertiseHandler(userFile, itemFile),
                 new BidHandler(userFile, itemFile),
                 new RefundHandler(userFile),
                 new AddCreditHandler(userFile)
@@ -81,7 +81,7 @@ public class Main {
                     // Handle
                     boolean success = handler.handle(transaction);
                     if (!success) {
-                        System.out.printf("[%s] Error handling transaction\r\n", handler.getName());
+                        System.out.printf("ERROR: [%s] Error handling transaction\r\n", handler.getName());
                     }
 
                     handled = true;
@@ -90,8 +90,28 @@ public class Main {
             }
 
             if (!handled) {
-                System.out.printf("Failed to handle transaction of type %d\r\n", transaction.getType());
+                System.out.printf("ERROR: Failed to handle transaction of type %d\r\n", transaction.getType());
             }
+        }
+
+        // Check if item listing has ended
+        for (Item item : itemFile.getItems()) {
+            int daysLeft = item.getDaysToAuction();
+            if (daysLeft == 0) {
+                // Give money to seller
+                User seller = userFile.getUserByName(item.getSellerUserName());
+                seller.setCredits(seller.getCredits() + item.getCurrentBid());
+
+                // Remove item from list
+                itemFile.removeItem(item);
+
+                System.out.printf("INFO: User %s won bid on item %s by %s for %.2f\r\n", item.getBidderUserName(),
+                        item.getName(), item.getSellerUserName(), item.getCurrentBid());
+
+                continue;
+            }
+
+            item.setDaysToAuction(daysLeft - 1);
         }
 
         try {

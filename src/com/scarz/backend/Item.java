@@ -46,7 +46,7 @@ public class Item {
      * Gets bidder's username
      * @return Bidder's username
      */
-    public String getBuyerUserName() {
+    public String getBidderUserName() {
         return mBidderUserName;
     }
 
@@ -56,6 +56,14 @@ public class Item {
      */
     public int getDaysToAuction() {
         return mDaysToAuction;
+    }
+
+    /**
+     * Sets the days left to auction
+     * @param days Days left to auction
+     */
+    public void setDaysToAuction(int days) {
+        mDaysToAuction = days;
     }
 
     /**
