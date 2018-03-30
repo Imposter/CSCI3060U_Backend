@@ -8,14 +8,29 @@ import com.scarz.backend.transactions.*;
  * previous day's user account and available items files.
  */
 public class Main {
+    public static final String DEFAULT_USERS_FILE = "current_users.txt";
+    public static final String DEFAULT_ITEMS_FILE = "available_items.txt";
+    public static final String DEFAULT_TRANSACTIONS_FILE = "transactions.txt";
+
     /**
      * Program entrypoint implementing program logic and components
      * @param args Command line arguments
      */
     public static void main(String[] args) {
-        // TODO: Take files from args
+        // Get files from arguments
+        String userFilePath = DEFAULT_USERS_FILE;
+        if (args.length >= 1) userFilePath = args[0];
+        String itemFilePath = DEFAULT_ITEMS_FILE;
+        if (args.length >= 2) itemFilePath = args[1];
+        String transactionFilePath = DEFAULT_TRANSACTIONS_FILE;
+        if (args.length >= 3) transactionFilePath = args[2];
+
+        System.out.printf("Using user file: %s\r\n", userFilePath);
+        System.out.printf("Using item file: %s\r\n", itemFilePath);
+        System.out.printf("Using transaction file: %s\r\n", transactionFilePath);
+
         // Create UserFile instance
-        UserFile userFile = new UserFile("current_users.txt");
+        UserFile userFile = new UserFile(userFilePath);
 
         // Open UserFile instance and read all users
         try {
@@ -27,7 +42,7 @@ public class Main {
         }
 
         // Create ItemFile instance
-        ItemFile itemFile = new ItemFile("available_items.txt");
+        ItemFile itemFile = new ItemFile(itemFilePath);
 
         // Open ItemFile instance and read all items
         try {
@@ -39,7 +54,7 @@ public class Main {
         }
 
         // Create TransactionFile instance
-        TransactionFile transactionFile = new TransactionFile("transactions.txt");
+        TransactionFile transactionFile = new TransactionFile(transactionFilePath);
 
         // Add Transaction Serializers to TransactionFile instance
         transactionFile.addSerializer(TransactionType.LOGIN, new BasicTransaction.Serializer());
