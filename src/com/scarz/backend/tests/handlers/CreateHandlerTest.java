@@ -2,6 +2,7 @@ package com.scarz.backend.tests.handlers;
 
 import com.scarz.backend.*;
 import com.scarz.backend.handlers.CreateHandler;
+import com.scarz.backend.tests.TestHelper;
 import com.scarz.backend.transactions.BasicTransaction;
 import com.scarz.backend.transactions.Transaction;
 import com.scarz.backend.transactions.TransactionType;
@@ -10,18 +11,18 @@ import junit.framework.TestCase;
 public class CreateHandlerTest extends TestCase {
     public void testGetType() {
         CreateHandler handler = new CreateHandler(null);
-        assertEquals(handler.getType(), TransactionType.CREATE);
+        assertEquals(TransactionType.CREATE, handler.getType());
     }
 
     public void testGetName() {
         CreateHandler handler = new CreateHandler(null);
-        assertEquals(handler.getName(), "create");
+        assertEquals("create", handler.getName());
     }
 
     public void testHandle() throws Exception {
         // Create and get files
-        HandlerTestHelper.createFiles();
-        UserFile userFile = HandlerTestHelper.getUserFile();
+        TestHelper.createFiles();
+        UserFile userFile = TestHelper.getUserFile();
 
         // Open files
         userFile.open();
@@ -34,9 +35,9 @@ public class CreateHandlerTest extends TestCase {
         // Check if the user was stored
         User user = userFile.getUserByName("newuser");
         assertNotNull(user);
-        assertEquals(user.getName(), "newuser");
-        assertEquals(user.getUserType(), UserType.BUY);
-        assertEquals(user.getCredits(), 100.00);
+        assertEquals("newuser", user.getName());
+        assertEquals(UserType.BUY, user.getUserType());
+        assertEquals(100.00, user.getCredits());
 
         // Close files
         userFile.close();

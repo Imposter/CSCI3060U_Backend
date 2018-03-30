@@ -6,24 +6,24 @@ import junit.framework.TestCase;
 public class BidTransactionTest extends TestCase {
     public void testGetItemName() {
         BidTransaction transaction = new BidTransaction("rolex watches", "selluser", "buyuser", 110.00);
-        assertEquals(transaction.getSellerUserName(), "selluser");
+        assertEquals("selluser", transaction.getSellerUserName());
     }
 
     public void testGetBuyerUserName() {
         // TODO/NOTE: TEST FAILED: Constructor arguments were backwards (selluser/buyuser)
         BidTransaction transaction = new BidTransaction("rolex watches", "selluser", "buyuser", 110.00);
-        assertEquals(transaction.getBuyerUserName(), "buyuser");
+        assertEquals("buyuser", transaction.getBuyerUserName());
     }
 
     public void testGetSellerUserName() {
         // TODO/NOTE: TEST FAILED: Constructor arguments were backwards (selluser/buyuser)
         BidTransaction transaction = new BidTransaction("rolex watches", "selluser", "buyuser", 110.00);
-        assertEquals(transaction.getSellerUserName(), "selluser");
+        assertEquals("selluser", transaction.getSellerUserName());
     }
 
     public void testGetNewBid() {
         BidTransaction transaction = new BidTransaction("rolex watches", "selluser", "buyuser", 110.00);
-        assertEquals(transaction.getNewBid(), 110.00);
+        assertEquals(110.00, transaction.getNewBid());
     }
 
     public void testDeserializer() throws Exception {
@@ -31,9 +31,9 @@ public class BidTransactionTest extends TestCase {
         String serializedTransaction = "04 rolex watches             selluser        buyuser         110.00";
         BidTransaction transaction = serializer.deserialize(serializedTransaction);
 
-        assertEquals(transaction.getItemName(), "rolex watches");
-        assertEquals(transaction.getSellerUserName(), "selluser");
-        assertEquals(transaction.getBuyerUserName(), "buyuser");
-        assertEquals(transaction.getNewBid(), 110.00);
+        assertEquals("rolex watches", transaction.getItemName());
+        assertEquals("selluser", transaction.getSellerUserName());
+        assertEquals("buyuser", transaction.getBuyerUserName());
+        assertEquals(110.00, transaction.getNewBid());
     }
 }

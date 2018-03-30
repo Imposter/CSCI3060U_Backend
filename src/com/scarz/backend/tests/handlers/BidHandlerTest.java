@@ -4,6 +4,7 @@ import com.scarz.backend.Item;
 import com.scarz.backend.ItemFile;
 import com.scarz.backend.UserFile;
 import com.scarz.backend.handlers.BidHandler;
+import com.scarz.backend.tests.TestHelper;
 import com.scarz.backend.transactions.BidTransaction;
 import com.scarz.backend.transactions.Transaction;
 import com.scarz.backend.transactions.TransactionType;
@@ -12,19 +13,19 @@ import junit.framework.TestCase;
 public class BidHandlerTest extends TestCase {
     public void testGetType() {
         BidHandler handler = new BidHandler(null, null);
-        assertEquals(handler.getType(), TransactionType.BID);
+        assertEquals(TransactionType.BID, handler.getType());
     }
 
     public void testGetName() {
         BidHandler handler = new BidHandler(null, null);
-        assertEquals(handler.getName(), "bid");
+        assertEquals("bid", handler.getName());
     }
 
     public void testHandle() throws Exception {
         // Create and get files
-        HandlerTestHelper.createFiles();
-        UserFile userFile = HandlerTestHelper.getUserFile();
-        ItemFile itemFile = HandlerTestHelper.getItemFile();
+        TestHelper.createFiles();
+        UserFile userFile = TestHelper.getUserFile();
+        ItemFile itemFile = TestHelper.getItemFile();
 
         // Open files
         userFile.open();
@@ -38,11 +39,11 @@ public class BidHandlerTest extends TestCase {
         // Check if the bid was successful
         Item item = itemFile.getItemByUserAndName("selluser", "Rolex Watch");
         assertNotNull(item);
-        assertEquals(item.getName(), "Rolex Watch");
-        assertEquals(item.getSellerUserName(), "selluser");
-        assertEquals(item.getBidderUserName(), "buyuser");
-        assertEquals(item.getDaysToAuction(), 42);
-        assertEquals(item.getCurrentBid(), 150.00);
+        assertEquals("Rolex Watch", item.getName());
+        assertEquals("selluser", item.getSellerUserName());
+        assertEquals("buyuser", item.getBidderUserName());
+        assertEquals(42, item.getDaysToAuction());
+        assertEquals(150.00, item.getCurrentBid());
 
         // Close files
         userFile.close();

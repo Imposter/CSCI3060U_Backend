@@ -4,6 +4,7 @@ import com.scarz.backend.User;
 import com.scarz.backend.UserFile;
 import com.scarz.backend.UserType;
 import com.scarz.backend.handlers.AddCreditHandler;
+import com.scarz.backend.tests.TestHelper;
 import com.scarz.backend.transactions.BasicTransaction;
 import com.scarz.backend.transactions.Transaction;
 import com.scarz.backend.transactions.TransactionType;
@@ -12,18 +13,18 @@ import junit.framework.TestCase;
 public class AddCreditHandlerTest extends TestCase {
     public void testGetType() {
         AddCreditHandler handler = new AddCreditHandler(null);
-        assertEquals(handler.getType(), TransactionType.ADD_CREDIT);
+        assertEquals(TransactionType.ADD_CREDIT, handler.getType());
     }
 
     public void testGetName() {
         AddCreditHandler handler = new AddCreditHandler(null);
-        assertEquals(handler.getName(), "addcredit");
+        assertEquals("addcredit", handler.getName());
     }
 
     public void testHandle() throws Exception {
         // Create and get files
-        HandlerTestHelper.createFiles();
-        UserFile userFile = HandlerTestHelper.getUserFile();
+        TestHelper.createFiles();
+        UserFile userFile = TestHelper.getUserFile();
 
         // Open user file
         userFile.open();
@@ -35,7 +36,7 @@ public class AddCreditHandlerTest extends TestCase {
 
         // Check if the user's credits were updated
         User user = userFile.getUserByName("admin");
-        assertEquals(user.getCredits(), 1200.00);
+        assertEquals(1200.00, user.getCredits());
 
         // Close user file
         userFile.close();

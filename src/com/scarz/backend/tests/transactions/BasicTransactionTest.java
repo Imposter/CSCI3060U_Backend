@@ -8,17 +8,17 @@ import junit.framework.TestCase;
 public class BasicTransactionTest extends TestCase {
     public void testGetUserName() {
         BasicTransaction transaction = new BasicTransaction(TransactionType.LOGIN, "selluser", UserType.SELL, 9999.99);
-        assertEquals(transaction.getUserName(), "selluser");
+        assertEquals("selluser", transaction.getUserName());
     }
 
     public void testGetUserType() {
         BasicTransaction transaction = new BasicTransaction(TransactionType.LOGIN, "selluser", UserType.SELL, 9999.99);
-        assertEquals(transaction.getUserType(), UserType.SELL);
+        assertEquals(UserType.SELL, transaction.getUserType());
     }
 
     public void testGetCredits() {
         BasicTransaction transaction = new BasicTransaction(TransactionType.LOGIN, "selluser", UserType.SELL, 9999.99);
-        assertEquals(transaction.getCredits(), 9999.99);
+        assertEquals(9999.99, transaction.getCredits());
     }
 
     public void testDeserializer() throws Exception {
@@ -26,8 +26,8 @@ public class BasicTransactionTest extends TestCase {
         String serializedTransaction = "10 selluser        SS 009999.99";
         BasicTransaction transaction = serializer.deserialize(serializedTransaction);
 
-        assertEquals(transaction.getUserName(), "selluser");
-        assertEquals(transaction.getUserType(), UserType.SELL);
-        assertEquals(transaction.getCredits(), 9999.99);
+        assertEquals("selluser", transaction.getUserName());
+        assertEquals(UserType.SELL, transaction.getUserType());
+        assertEquals(9999.99, transaction.getCredits());
     }
 }

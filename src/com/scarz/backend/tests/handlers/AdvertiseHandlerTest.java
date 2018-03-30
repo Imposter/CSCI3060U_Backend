@@ -2,6 +2,7 @@ package com.scarz.backend.tests.handlers;
 
 import com.scarz.backend.*;
 import com.scarz.backend.handlers.AdvertiseHandler;
+import com.scarz.backend.tests.TestHelper;
 import com.scarz.backend.transactions.AdvertiseTransaction;
 import com.scarz.backend.transactions.Transaction;
 import com.scarz.backend.transactions.TransactionType;
@@ -10,19 +11,19 @@ import junit.framework.TestCase;
 public class AdvertiseHandlerTest extends TestCase {
     public void testGetType() {
         AdvertiseHandler handler = new AdvertiseHandler(null, null);
-        assertEquals(handler.getType(), TransactionType.ADVERTISE);
+        assertEquals(TransactionType.ADVERTISE, handler.getType());
     }
 
     public void testGetName() {
         AdvertiseHandler handler = new AdvertiseHandler(null, null);
-        assertEquals(handler.getName(), "advertise");
+        assertEquals("advertise", handler.getName());
     }
 
     public void testHandle() throws Exception {
         // Create and get files
-        HandlerTestHelper.createFiles();
-        UserFile userFile = HandlerTestHelper.getUserFile();
-        ItemFile itemFile = HandlerTestHelper.getItemFile();
+        TestHelper.createFiles();
+        UserFile userFile = TestHelper.getUserFile();
+        ItemFile itemFile = TestHelper.getItemFile();
 
         // Open files
         userFile.open();
@@ -36,10 +37,10 @@ public class AdvertiseHandlerTest extends TestCase {
         // Check if the item was stored
         Item item = itemFile.getItemByUserAndName("selluser", "Potatoes 50kg");
         assertNotNull(item);
-        assertEquals(item.getName(), "Potatoes 50kg");
-        assertEquals(item.getSellerUserName(), "selluser");
-        assertEquals(item.getDaysToAuction(), 10);
-        assertEquals(item.getCurrentBid(), 120.00);
+        assertEquals("Potatoes 50kg", item.getName());
+        assertEquals("selluser", item.getSellerUserName());
+        assertEquals(10, item.getDaysToAuction());
+        assertEquals(120.00, item.getCurrentBid());
 
         // Close files
         userFile.close();

@@ -14,7 +14,7 @@ public class FileTest extends TestCase {
     }
 
     public void testReadLines() throws IOException {
-        FileTestHelper.writeLinesToFile("test_read_lines.txt", new String[] {
+        TestHelper.writeLinesToFile("test_read_lines.txt", new String[] {
                 "Hello world!"
         });
 
@@ -23,8 +23,8 @@ public class FileTest extends TestCase {
         String[] lines = file.readLines();
         file.closeWrite();
 
-        assertEquals(lines.length, 1);
-        assertEquals(lines[0], "Hello world!");
+        assertEquals(1, lines.length);
+        assertEquals("Hello world!", lines[0]);
     }
 
     public void testWriteLine() throws IOException {
@@ -33,9 +33,9 @@ public class FileTest extends TestCase {
         file.writeLine("Hello world!");
         file.closeWrite();
 
-        String[] lines = FileTestHelper.readLinesFromFile("test_write_line.txt");
-        assertEquals(lines.length, 1);
-        assertEquals(lines[0], "Hello world!");
+        String[] lines = TestHelper.readLinesFromFile("test_write_line.txt");
+        assertEquals(1, lines.length);
+        assertEquals("Hello world!", lines[0]);
     }
 
     public void testCloseWrite() throws IOException {
@@ -45,7 +45,7 @@ public class FileTest extends TestCase {
     }
 
     public void testCloseRead() throws IOException {
-        FileTestHelper.writeLinesToFile("test_close_read.txt", new String[] {
+        TestHelper.writeLinesToFile("test_close_read.txt", new String[] {
                 "Hello world!"
         });
 
@@ -55,7 +55,7 @@ public class FileTest extends TestCase {
     }
 
     public void testOpenRead() throws IOException {
-        FileTestHelper.writeLinesToFile("test_open_read.txt", new String[] {
+        TestHelper.writeLinesToFile("test_open_read.txt", new String[] {
                 "Hello world!"
         });
 

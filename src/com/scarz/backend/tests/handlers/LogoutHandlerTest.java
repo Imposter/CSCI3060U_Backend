@@ -4,6 +4,7 @@ import com.scarz.backend.User;
 import com.scarz.backend.UserFile;
 import com.scarz.backend.UserType;
 import com.scarz.backend.handlers.LogoutHandler;
+import com.scarz.backend.tests.TestHelper;
 import com.scarz.backend.transactions.BasicTransaction;
 import com.scarz.backend.transactions.Transaction;
 import com.scarz.backend.transactions.TransactionType;
@@ -12,18 +13,18 @@ import junit.framework.TestCase;
 public class LogoutHandlerTest extends TestCase {
     public void testGetType() {
         LogoutHandler handler = new LogoutHandler(null);
-        assertEquals(handler.getType(), TransactionType.LOGOUT);
+        assertEquals(TransactionType.LOGOUT, handler.getType());
     }
 
     public void testGetName() {
         LogoutHandler handler = new LogoutHandler(null);
-        assertEquals(handler.getName(), "logout");
+        assertEquals("logout", handler.getName());
     }
 
     public void testHandle() throws Exception {
         // Create and get files
-        HandlerTestHelper.createFiles();
-        UserFile userFile = HandlerTestHelper.getUserFile();
+        TestHelper.createFiles();
+        UserFile userFile = TestHelper.getUserFile();
 
         // Open files
         userFile.open();
@@ -36,9 +37,9 @@ public class LogoutHandlerTest extends TestCase {
         // Check user info
         User user = userFile.getUserByName("selluser");
         assertNotNull(user);
-        assertEquals(user.getName(), "selluser");
-        assertEquals(user.getUserType(), UserType.SELL);
-        assertEquals(user.getCredits(), 10099.99);
+        assertEquals("selluser", user.getName());
+        assertEquals(UserType.SELL, user.getUserType());
+        assertEquals(10099.99, user.getCredits());
 
         // Close files
         userFile.close();

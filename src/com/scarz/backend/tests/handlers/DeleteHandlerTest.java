@@ -4,6 +4,7 @@ import com.scarz.backend.User;
 import com.scarz.backend.UserFile;
 import com.scarz.backend.UserType;
 import com.scarz.backend.handlers.DeleteHandler;
+import com.scarz.backend.tests.TestHelper;
 import com.scarz.backend.transactions.BasicTransaction;
 import com.scarz.backend.transactions.Transaction;
 import com.scarz.backend.transactions.TransactionType;
@@ -12,18 +13,18 @@ import junit.framework.TestCase;
 public class DeleteHandlerTest extends TestCase {
     public void testGetType() {
         DeleteHandler handler = new DeleteHandler(null);
-        assertEquals(handler.getType(), TransactionType.DELETE);
+        assertEquals(TransactionType.DELETE, handler.getType());
     }
 
     public void testGetName() {
         DeleteHandler handler = new DeleteHandler(null);
-        assertEquals(handler.getName(), "delete");
+        assertEquals("delete", handler.getName());
     }
 
     public void testHandle() throws Exception {
         // Create and get files
-        HandlerTestHelper.createFiles();
-        UserFile userFile = HandlerTestHelper.getUserFile();
+        TestHelper.createFiles();
+        UserFile userFile = TestHelper.getUserFile();
 
         // Open files
         userFile.open();

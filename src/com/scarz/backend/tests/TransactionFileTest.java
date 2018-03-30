@@ -11,24 +11,19 @@ import junit.framework.TestCase;
 import java.util.List;
 
 public class TransactionFileTest extends TestCase {
-    public static final String TRANSACTIONS_FILE = "test_transactions.txt";
 
     public void testAddSerializer() {
         // Create transaction file and add a serializer
-        TransactionFile file = new TransactionFile(TRANSACTIONS_FILE);
+        TransactionFile file = TestHelper.getTransactionFile();
         file.addSerializer(TransactionType.LOGIN, new BasicTransaction.Serializer());
     }
 
     public void testOpen() throws Exception {
         // Write test data to file
-        FileTestHelper.writeLinesToFile(TRANSACTIONS_FILE, new String[] {
-                "10 selluser        SS 009999.99",
-                "03 Rolex Watch               selluser        050 100.00",
-                "00 selluser        SS 009999.99"
-        });
+        TestHelper.createFiles();
 
         // Create transaction file and add a serializer
-        TransactionFile file = new TransactionFile(TRANSACTIONS_FILE);
+        TransactionFile file = TestHelper.getTransactionFile();
         file.addSerializer(TransactionType.LOGIN, new BasicTransaction.Serializer());
         file.addSerializer(TransactionType.ADVERTISE, new AdvertiseTransaction.Serializer());
         file.addSerializer(TransactionType.LOGOUT, new BasicTransaction.Serializer());
@@ -42,14 +37,10 @@ public class TransactionFileTest extends TestCase {
 
     public void testGetTransactions() throws Exception {
         // Write test data to file
-        FileTestHelper.writeLinesToFile(TRANSACTIONS_FILE, new String[] {
-                "10 selluser        SS 009999.99",
-                "03 Rolex Watch               selluser        050 100.00",
-                "00 selluser        SS 009999.99"
-        });
+        TestHelper.createFiles();
 
         // Create transaction file and add a serializer
-        TransactionFile file = new TransactionFile(TRANSACTIONS_FILE);
+        TransactionFile file = TestHelper.getTransactionFile();
         file.addSerializer(TransactionType.LOGIN, new BasicTransaction.Serializer());
         file.addSerializer(TransactionType.ADVERTISE, new AdvertiseTransaction.Serializer());
         file.addSerializer(TransactionType.LOGOUT, new BasicTransaction.Serializer());
@@ -64,17 +55,17 @@ public class TransactionFileTest extends TestCase {
                 // If the transactions are of type login or logout, ensure that they contain the correct information
                 BasicTransaction transaction = (BasicTransaction)t;
 
-                assertEquals(transaction.getUserName(), "selluser");
-                assertEquals(transaction.getUserType(), UserType.SELL);
-                assertEquals(transaction.getCredits(), 9999.99);
+                assertEquals("selluser", transaction.getUserName());
+                assertEquals(UserType.SELL, transaction.getUserType());
+                assertEquals(9999.99, transaction.getCredits());
             } else if (t.getType() == TransactionType.ADVERTISE) {
                 // If the transaction is of type advertise, check to make sure it contains the correct information
                 AdvertiseTransaction transaction = (AdvertiseTransaction)t;
 
-                assertEquals(transaction.getItemName(), "Rolex Watch");
-                assertEquals(transaction.getSellerUserName(), "selluser");
-                assertEquals(transaction.getDaysToAuction(), 50);
-                assertEquals(transaction.getMinBid(), 100.00);
+                assertEquals("Rolex Watch", transaction.getItemName());
+                assertEquals("selluser", transaction.getSellerUserName());
+                assertEquals(50, transaction.getDaysToAuction());
+                assertEquals(100.00, transaction.getMinBid());
             }
         }
 

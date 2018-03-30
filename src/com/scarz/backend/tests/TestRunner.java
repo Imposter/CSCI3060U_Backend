@@ -30,6 +30,8 @@ public class TestRunner {
                 // Files
                 FileTest.class,
                 ItemFileTest.class,
+                UserFileTest.class,
+                TransactionFileTest.class,
 
                 // Models
                 ItemTest.class
