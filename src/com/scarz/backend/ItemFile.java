@@ -33,7 +33,7 @@ public class ItemFile extends File {
         openRead();
 
         // Read all items
-        List<String> lines = readLines();
+        String[] lines = readLines();
         for (String line : lines) {
             // End of file item
             if (line.equals("END"))

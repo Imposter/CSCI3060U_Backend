@@ -45,7 +45,7 @@ public class TransactionFile extends File {
         openRead();
 
         // Read all transactions
-        List<String> lines = readLines();
+        String[] lines = readLines();
         for (String line : lines) {
             // Skip invalid lines
             if (line.isEmpty())

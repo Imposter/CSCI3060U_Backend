@@ -25,7 +25,14 @@ public class TestRunner {
                 DeleteHandlerTest.class,
                 LoginHandlerTest.class,
                 LogoutHandlerTest.class,
-                RefundHandlerTest.class
+                RefundHandlerTest.class,
+
+                // Files
+                FileTest.class,
+                ItemFileTest.class,
+
+                // Models
+                ItemTest.class
         );
 
         for (Failure failure : result.getFailures()) {

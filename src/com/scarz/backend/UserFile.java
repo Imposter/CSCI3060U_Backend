@@ -33,7 +33,7 @@ public class UserFile extends File {
         openRead();
 
         // Read all users
-        List<String> lines = readLines();
+        String[] lines = readLines();
         for (String line : lines) {
             // End of file user
             if (line.equals("END"))

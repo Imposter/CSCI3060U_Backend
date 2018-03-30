@@ -37,7 +37,7 @@ public class File {
      * @throws IOException Thrown when file is not able to be read
      * @throws UnsupportedOperationException Thrown when the file is not opened in read mode
      */
-    public List<String> readLines() throws IOException, UnsupportedOperationException {
+    public String[] readLines() throws IOException, UnsupportedOperationException {
         // Check if file is open
         if (!mReadMode)
             throw new UnsupportedOperationException("File is not open in read mode");
@@ -48,7 +48,7 @@ public class File {
         while ((line = reader.readLine()) != null)
             result.add(line);
 
-        return result;
+        return result.toArray(new String[0]);
     }
 
     /**
