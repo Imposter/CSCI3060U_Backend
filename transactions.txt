@@ -1,3 +1,0 @@
-10 selluser        SS 009999.99
-03 Rolex Watch               selluser        050 100.00
-00 selluser        SS 009999.99

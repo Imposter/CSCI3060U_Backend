@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CSCI3060U_Backend.iml" filepath="$PROJECT_DIR$/CSCI3060U_Backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CSCI3060U_Backend.iml" filepath="$PROJECT_DIR$/.idea/modules/CSCI3060U_Backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CSCI3060U_Backend_main.iml" filepath="$PROJECT_DIR$/.idea/modules/CSCI3060U_Backend_main.iml" group="CSCI3060U_Backend" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CSCI3060U_Backend_test.iml" filepath="$PROJECT_DIR$/.idea/modules/CSCI3060U_Backend_test.iml" group="CSCI3060U_Backend" />
     </modules>
   </component>
 </project>

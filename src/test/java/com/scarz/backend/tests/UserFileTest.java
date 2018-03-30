@@ -8,8 +8,6 @@ import junit.framework.TestCase;
 import java.util.List;
 
 public class UserFileTest extends TestCase {
-    public static final String USERS_FILE = "test_current_users.txt";
-
     public void testOpen() throws Exception {
         // Create files
         TestHelper.createFiles();

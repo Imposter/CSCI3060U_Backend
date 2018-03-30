@@ -13,6 +13,7 @@ public class Main {
      * @param args Command line arguments
      */
     public static void main(String[] args) {
+        // TODO: Take files from args
         // Create UserFile instance
         UserFile userFile = new UserFile("current_users.txt");
 
